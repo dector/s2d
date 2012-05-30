@@ -3,6 +3,7 @@ package ua.org.dector.s2d
 import graphics.Graphics
 import state.StateManager
 import java.util.logging.Logger
+import struct.World
 
 /**
  * S2D application
@@ -15,37 +16,40 @@ abstract class S2DApp(val name: String = Lang.NonameApp)
 {
     private var dt: Int = 0
 
-    final def onInit( initFunc: () => Unit = { () =>
-            Logger.getLogger(Settings.Logger_Name)
-            Graphics.init()
+    def create() {}
+
+    final def init()
+    {
         //        systemLoad()
         //        loadResources()
+        Logger.getLogger(Settings.Logger_Name)
+        Graphics.init()
+        create()
+    }
 
-    } ) { initFunc() }
-
-    final def onLoop( loopFunc: () => Unit = { () =>
+    final def loop()
+    {
         //            checkInput()
         //            preRenderCount()
         //            systemCount()
-        render()
         //            systemDraw()
         //            updateDisplay()
+        render()
         Graphics.update()
-    } ) { loopFunc() }
+    }
 
-    final def render( renderFunc: (Int) => Unit = (Int) => Unit ) { renderFunc(dt) }
+    final def render() { World.render(dt) }
 
     final def run()
     {
-        onInit()
+        init()
         while (! StateManager.isDone)
-            onLoop()
-        onExit()
+            loop()
+        exit()
     }
 
-    final def onExit( exitFunc: () => Unit = () => Unit )
+    final def exit()
     {
-        exitFunc()
         Graphics.destroy()
     }
 
