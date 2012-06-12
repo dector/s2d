@@ -21,12 +21,6 @@ class Physical
     var ay = 0f
 
     // TODO: Implement forces
-    // TODO: Make global physics (as World physics + exceptions for entities)
-    var gravityax = 0f
-    var gravityay = 0f
-
-    var frictionXCoef = 1f
-    var frictionYCoef = 1f
 
     def Vx_= (Vx: Int) { this.Vx = Vx.toFloat }
     def Vy_= (Vy: Int) { this.Vy = Vy.toFloat }
@@ -37,18 +31,11 @@ class Physical
     {
         val t = dt.toFloat / 1000
 
-        Vx = (Vx + (ax + gravityax) * t) * frictionXCoef
-        Vy = (Vy + (ay + gravityay) * t) * frictionYCoef
+        Vx = World.physics.countVelocity(Vx, ax, t, World.physics.One_On_Friction)
+        Vy = World.physics.countVelocity(Vy, ay, t + World.physics.Gravity_Acceleration,
+            World.physics.One_On_Friction)
 
-        val newX = entity.x + Vx * t
-        val newY = entity.y + Vy * t
-
-        entity.x = newX
-        entity.y = newY
+        entity.x = World.physics.countPos(entity.x, Vx, t)
+        entity.y = World.physics.countPos(entity.y, Vy, t)
     }
-}
-
-object Physical
-{
-    val Default_Friction_Coef = 0.975f
 }

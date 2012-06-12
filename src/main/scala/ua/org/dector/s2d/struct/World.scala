@@ -2,6 +2,7 @@ package ua.org.dector.s2d.struct
 
 import java.util.{HashMap, TreeSet, LinkedList}
 import ua.org.dector.s2d.events.KeyEventState
+import ua.org.dector.s2d.physics.DefaultPhysics
 
 /**
  * @author dector (dector9@gmail.com)
@@ -16,6 +17,8 @@ object World
 
     private val scenes = new TreeSet[Scene]
     private var currentScene: Scene = null
+
+    var physics = DefaultPhysics
 
     def += (scene: Scene) {
         scenes.add(scene)
