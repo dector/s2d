@@ -1,6 +1,8 @@
 package ua.org.dector.s2d
 
+import events.KeyEventState
 import graphics.{SpriteList, Sprite, Graphics}
+import input.Keyboard
 import struct._
 import util.ResourceLoader
 
@@ -22,5 +24,25 @@ object S2DAppDemo extends S2DApp {
 
         scene += entity
         World += scene
+
+        // KeyboardEvent
+        // MouseEvent
+        // Other events
+
+        entity.addKeyboardEvent(KeyEventState.Key_Down, Keyboard.Key_Left,
+            (e: Entity) => { println("<- on " + e.name) })
+        entity.addKeyboardEvent(KeyEventState.Key_Down, Keyboard.Key_Right,
+            (e: Entity) => { println("-> on " + e.name) })
+
+//        entity.addKeyboardEvent(KeyEventState.Key_Down, Keyboard.Key_Left,
+//            (e: Entity) => { e.physical.velocityX = -5 })
+//        entity.addKeyboardEvent.onKeyUp(Keyboard.Key_Left,
+//            (e: Entity) => { e.physical.velocityX = 0 })
+//        entity.addKeyboardEvent.onKeyDown(Keyboard.Key_Right,
+//            (e: Entity) => { e.physical.velocityX = 5 })
+//        entity.addKeyboardEvent.onKeyUp(Keyboard.Key_Right,
+//            (e: Entity) => { e.physical.velocityX = 0 })
+
+        World select entity
     }
 }

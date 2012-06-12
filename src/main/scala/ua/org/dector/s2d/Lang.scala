@@ -5,5 +5,5 @@ package ua.org.dector.s2d
  */
 
 object Lang {
-    val NonameApp = "S2D Application"
+    val Noname_App = "S2D Application"
 }

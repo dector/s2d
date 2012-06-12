@@ -1,6 +1,7 @@
 package ua.org.dector.s2d
 
 import graphics.Graphics
+import input.InputManager
 import state.StateManager
 import java.util.logging.Logger
 import struct.World
@@ -11,7 +12,7 @@ import struct.World
  * @author dector (dector9@gmail.com)
  */
 
-abstract class S2DApp(val name: String = Lang.NonameApp)
+abstract class S2DApp(val name: String = Lang.Noname_App)
         extends Runnable
 {
     private var dt: Int = 0
@@ -27,9 +28,16 @@ abstract class S2DApp(val name: String = Lang.NonameApp)
         create()
     }
 
+    final def checkInput()
+    {
+        while (InputManager.next()) {
+            World.processInput(InputManager.keyEvent)
+        }
+    }
+
     final def loop()
     {
-        //            checkInput()
+        checkInput()
         //            preRenderCount()
         //            systemCount()
         //            systemDraw()
