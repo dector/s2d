@@ -17,8 +17,10 @@ object S2DAppDemo extends S2DApp {
         val spriteList = new SpriteList(texture)
         val sprite  = new Sprite(spriteList)
 
-        val entType = new Type("test", new Rendered(sprite), new Physical)
+        val entType = new Type("test", new Rendered(sprite))
         val entity  = new Entity(entType, Graphics.width / 2, Graphics.height / 2)
+        entity.physical.frictionXCoef = Physical.Default_Friction_Coef
+        entity.physical.frictionYCoef = Physical.Default_Friction_Coef
 
         val scene   = new Scene(Graphics.width, Graphics.height)
 
@@ -30,18 +32,22 @@ object S2DAppDemo extends S2DApp {
         // Other events
 
         entity.addKeyboardEvent(KeyEventState.Key_Down, Keyboard.Key_Left,
-            (e: Entity) => { println("<- on " + e.name) })
+            (e: Entity) => { e.physical.ax = -350 })
+        entity.addKeyboardEvent(KeyEventState.Key_Up, Keyboard.Key_Left,
+            (e: Entity) => { e.physical.ax = 0 })
         entity.addKeyboardEvent(KeyEventState.Key_Down, Keyboard.Key_Right,
-            (e: Entity) => { println("-> on " + e.name) })
+            (e: Entity) => { e.physical.ax = 350 })
+        entity.addKeyboardEvent(KeyEventState.Key_Up, Keyboard.Key_Right,
+            (e: Entity) => { e.physical.ax = 0 })
 
-//        entity.addKeyboardEvent(KeyEventState.Key_Down, Keyboard.Key_Left,
-//            (e: Entity) => { e.physical.velocityX = -5 })
-//        entity.addKeyboardEvent.onKeyUp(Keyboard.Key_Left,
-//            (e: Entity) => { e.physical.velocityX = 0 })
-//        entity.addKeyboardEvent.onKeyDown(Keyboard.Key_Right,
-//            (e: Entity) => { e.physical.velocityX = 5 })
-//        entity.addKeyboardEvent.onKeyUp(Keyboard.Key_Right,
-//            (e: Entity) => { e.physical.velocityX = 0 })
+        entity.addKeyboardEvent(KeyEventState.Key_Down, Keyboard.Key_Down,
+            (e: Entity) => { e.physical.ay = -150 })
+        entity.addKeyboardEvent(KeyEventState.Key_Up, Keyboard.Key_Down,
+            (e: Entity) => { e.physical.ay = 0 })
+        entity.addKeyboardEvent(KeyEventState.Key_Down, Keyboard.Key_Up,
+            (e: Entity) => { e.physical.ay = 150 })
+        entity.addKeyboardEvent(KeyEventState.Key_Up, Keyboard.Key_Up,
+            (e: Entity) => { e.physical.ay = 0 })
 
         World select entity
     }

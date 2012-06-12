@@ -38,7 +38,7 @@ object World
 
     def render(dt: Int)
     {
-        if (! scenes.isEmpty)
+        if (currentScene != null)
         {
             currentScene.render(dt)
         }
@@ -71,7 +71,7 @@ object World
 
             while (iter.hasNext)
             {
-                val (entity, exec) = iter.next
+                val (entity, exec) = iter.next()
 
                 if (isSelected(entity))
                     exec(entity)
@@ -82,5 +82,13 @@ object World
     def isSelected(entity: Entity): Boolean =
     {
         selected.contains(entity)
+    }
+
+    def updatePhysics(dt: Int)
+    {
+        if (currentScene != null)
+        {
+            currentScene.updatePhysics(dt)
+        }
     }
 }

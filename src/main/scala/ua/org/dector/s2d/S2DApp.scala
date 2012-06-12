@@ -15,7 +15,8 @@ import struct.World
 abstract class S2DApp(val name: String = Lang.Noname_App)
         extends Runnable
 {
-    private var dt: Int = 0
+    private var dt          = 0
+    private var lastTime    = System.currentTimeMillis
 
     def create() {}
 
@@ -28,16 +29,31 @@ abstract class S2DApp(val name: String = Lang.Noname_App)
         create()
     }
 
+    final def countDt()
+    {
+        val currTime    = System.currentTimeMillis
+        dt              = (currTime - lastTime).toInt;
+        lastTime        = currTime
+    }
+
     final def checkInput()
     {
-        while (InputManager.next()) {
+        while (InputManager.next())
+        {
             World.processInput(InputManager.keyEvent)
         }
+    }
+
+    final def updatePhysics()
+    {
+        World.updatePhysics(dt)
     }
 
     final def loop()
     {
         checkInput()
+        countDt()
+        updatePhysics()
         //            preRenderCount()
         //            systemCount()
         //            systemDraw()

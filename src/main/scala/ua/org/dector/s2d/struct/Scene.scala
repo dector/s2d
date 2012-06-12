@@ -43,4 +43,15 @@ class Scene(val width: Int, val height: Int)
             }
         }
     }
+
+    def updatePhysics(dt: Int)
+    {
+        val iter = entities.values.iterator
+
+        while (iter.hasNext)
+        {
+            val entity = iter.next()
+            entity.updatePhysics(dt)
+        }
+    }
 }

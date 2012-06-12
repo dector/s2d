@@ -8,20 +8,20 @@ import ua.org.dector.s2d.events.{Event, KeyEventState}
  */
 
 class Entity(val eType: Type,
-             var x: Int,
-             var y: Int,
+             var x: Float,
+             var y: Float,
              val name: String,
              var z: Int = 0)
 {
-//    private val events = new HashMap[KeyEventState.type, (Entity, Event) => Unit]
+    var physical = new Physical
 
-    def this(eType: Type, x: Int, y: Int, z: Int = 0) =
+    def this(eType: Type, x: Float, y: Float, z: Int = 0) =
         this(eType, x + eType.rendered.offsetX, y + eType.rendered.offsetY,
         eType.name + eType.nextId(), z)
 
     def render(dt: Int)
     {
-        eType.rendered.render(dt, x, y)
+        eType.rendered.render(dt, x.toInt, y.toInt)
     }
 
     def addKeyboardEvent(eventType: KeyEventState.KeyEventState, eventKey: Int,
@@ -35,8 +35,13 @@ class Entity(val eType: Type,
         World.removeKeyboardEvent(this, eventType, eventKey)
     }
 
-    def onEvent(event: Event)
-    {
+//    def onEvent(event: Event)
+//    {
+//
+//    }
 
+    def updatePhysics(dt: Int)
+    {
+        physical.update(dt, this)
     }
 }
