@@ -8,6 +8,8 @@ import ua.org.dector.s2d.graphics.Sprite
 
 class Rendered(var sprite: Sprite, val offsetX: Int, val offsetY: Int)
 {
+    // Only state independent code!
+
     def this(sprite: Sprite) =
         this(sprite, - sprite.width / 2, - sprite.height / 2)
 

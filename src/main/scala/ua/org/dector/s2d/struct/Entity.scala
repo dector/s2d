@@ -11,17 +11,18 @@ class Entity(val eType: Type,
              var x: Float,
              var y: Float,
              val name: String,
+             var rendered: Rendered,
              var z: Int = 0)
 {
     var physical = new Physical
 
-    def this(eType: Type, x: Float, y: Float, z: Int = 0) =
-        this(eType, x + eType.rendered.offsetX, y + eType.rendered.offsetY,
-        eType.name + eType.nextId(), z)
+    def this(eType: Type, x: Float, y: Float, rendered: Rendered, z: Int = 0) =
+        this(eType, x + rendered.offsetX, y + rendered.offsetY,
+        eType.name + eType.nextId(), rendered, z)
 
     def render(dt: Int)
     {
-        eType.rendered.render(dt, x.toInt, y.toInt)
+        rendered.render(dt, x.toInt, y.toInt)
     }
 
     def addKeyboardEvent(eventType: KeyEventState.KeyEventState, eventKey: Int,
@@ -34,11 +35,6 @@ class Entity(val eType: Type,
     {
         World.removeKeyboardEvent(this, eventType, eventKey)
     }
-
-//    def onEvent(event: Event)
-//    {
-//
-//    }
 
     def updatePhysics(dt: Int)
     {

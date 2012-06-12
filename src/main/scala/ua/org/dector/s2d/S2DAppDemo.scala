@@ -17,8 +17,9 @@ object S2DAppDemo extends S2DApp {
         val spriteList = new SpriteList(texture)
         val sprite  = new Sprite(spriteList)
 
-        val entType = new Type("test", new Rendered(sprite))
-        val entity  = new Entity(entType, Graphics.width / 2, Graphics.height / 2)
+        val entType = new Type("test")
+        val entity  = new Entity(entType, Graphics.width / 2, Graphics.height / 2,
+            new Rendered(sprite))
         entity.physical.frictionXCoef = Physical.Default_Friction_Coef
         entity.physical.frictionYCoef = Physical.Default_Friction_Coef
 
